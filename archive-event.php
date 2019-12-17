@@ -43,7 +43,7 @@
         </div>
 
     <?php  endwhile;  
-    # En general la paginación en WP solo funciona fuera del box con la query por defecto el la current url
+    # En general la paginación en WP solo funciona fuera del box con la query por defecto en la current url
       echo paginate_links();
     ?>
 

@@ -1,17 +1,14 @@
 <?php get_header(); 
 
     while(have_posts()) {
-        the_post(); ?>
+        the_post(); 
 
-  <div class="page-banner">
-    <div class="page-banner__bg-image" style="background-image: url(<?php echo get_theme_file_uri('/images/ocean.jpg'); ?>);"></div>
-    <div class="page-banner__content container container--narrow">
-      <h1 class="page-banner__title"><?php the_title(); ?></h1>
-      <div class="page-banner__intro">
-        <p>DON´T FORGET TO REPLACE ME LATER.</p>
-      </div>
-    </div>  
-  </div>
+        pageBanner(array(
+          'title' => 'Hello there, this is the title',
+          'subtitle' => 'Hi, this is the subtitle',
+          'photo' => 'https://images.unsplash.com/photo-1576078766417-80f4b730120c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=946&q=80'
+        ));
+        ?>
 
   <div class="container container--narrow page-section">
     <?php
