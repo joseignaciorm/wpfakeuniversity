@@ -21,17 +21,18 @@ function pageBanner($args = null) {
 ?>
   <div class="page-banner">
     <div class="page-banner__bg-image" style="background-image: url(<?php 
-    //echo get_theme_file_uri('/images/ocean.jpg');
-    //$pageBannerImage = get_field('page_banner_background_image'); 
-    //echo $pageBannerImage['url'] // get_field() retorna un array
-   // echo $pageBannerImage['sizes']['pageBanner']; // Este es el tamaño definido en add_image_size('pageBanner', 1500, 350, true); del function
-    echo $args['photo'];?>);"></div>
+      //echo get_theme_file_uri('/images/ocean.jpg');
+      //$pageBannerImage = get_field('page_banner_background_image'); 
+      //echo $pageBannerImage['url'] // get_field() retorna un array
+      // echo $pageBannerImage['sizes']['pageBanner']; // Este es el tamaño definido en add_image_size('pageBanner', 1500, 350, true); del function
+      echo $args['photo'];?>);">
+    </div>
     <div class="page-banner__content container container--narrow">
       <h1 class="page-banner__title"><?php echo $args['title'] ?></h1>
       <div class="page-banner__intro">
         <p><?php echo $args['subtitle']; ?></p>
       </div>
-    </div>  
+    </div>
   </div>
 <?php }
 
@@ -73,7 +74,7 @@ function university_adjust_queries($query) {
   if ( !is_admin() && is_post_type_archive('event')  AND $query->is_main_query() ) {
     $today = date('Ydm');
     $query->set('meta_key', 'event_date');
-    $query->set('posts_per_page', 1);
+    $query->set('posts_per_page', 3);
     $query->set('orderby', 'meta_value_num');
     $query->set('order', 'ASC');
     $query->set('meta_query', array(
