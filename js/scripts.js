@@ -5,11 +5,11 @@ import slick from 'slick-carousel';
 // Our modules / classes
 import MobileMenu from './modules/MobileMenu';
 import HeroSlider from './modules/HeroSlider';
-import GoogleMap from './module/GoogleMap';
+import GoogleMap from './modules/GoogleMap';
+import Search from './modules/Search';
 
 // Instantiate a new object using our modules/classes
 var mobileMenu = new MobileMenu();
 var heroSlider = new HeroSlider();
 var googleMap = new GoogleMap();
-
-alert("Hello, i am a search");
+var search = new Search();
