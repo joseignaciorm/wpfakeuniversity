@@ -61,6 +61,19 @@
     </div>
   </footer>
 
+  <div class="search-overlay">
+    <div class="search-overlay__top">
+       <div class="container">
+         <span class="fa fa-search search-overlay__icon" aria-hidden="true"></span>
+         <input type="text" class="search-term" placeholder="What aro you looking for?" id="search-term">
+         <span class="fa fa-window-close search-overlay__close" aria-hidden="true"></span>
+       </div>
+    </div>
+    <div class="container">
+        <div id="search-overlay__results"></div>
+    </div>
+  </div>
+
   <?php wp_footer(); ?>
 
   </body>
