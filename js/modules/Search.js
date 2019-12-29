@@ -42,8 +42,18 @@ class Search {
     }
 
     getResults() {
-        this.resultsDiv.html("Imaging real results here!");
-        this.isSpinnerVisible = false;
+        //$.getJSON(url, callback); // ES6 Arrow function () => {}
+        // ES6 Template file `` `<p>${codido js... no html}</p>`
+        // Ternary operator condition ? true : false
+        $.getJSON(universityData.root_url + '/wp-json/wp/v2/posts?search=' + this.searchField.val(), posts =>  {
+            this.resultsDiv.html(`
+                <h2 class="search-overlay__section-title">General Information</h2>
+                ${posts.length ? '<ul class="link-list min-list">' : '<p>No general information matches that search.</p>'}
+                    ${posts.map(items => `<li><a href="${items.link}">${items.title.rendered}</a></li>`).join('')}
+                ${posts.length ? '</ul>' : ''}
+            `);
+            this.isSpinnerVisible = false;
+        });
     }
 
     keyPressDispatcher(e) {
