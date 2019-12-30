@@ -1,5 +1,17 @@
 <?php
 
+  require get_theme_file_path('/inc/search-route.php');
+
+// Inicializando WordPress Rest API
+function university_custom_rest() {
+  // Registro de JSON datos custom field named author.
+  // register_rest_field('the custom type name', 'Wherever name of custom field we want', 'array that describehow we want to manage that field')
+  register_rest_field('post', 'authorName', array(
+    'get_callback' => function () {return get_the_author();}
+  ));
+}
+add_action('rest_api_init', 'university_custom_rest');
+
 // Función para el page banner dinámico
 function pageBanner($args = null) {
   if(!$args['title']) {
@@ -16,9 +28,9 @@ function pageBanner($args = null) {
     } else {
       $args['photo'] = get_theme_file_uri('/images/ocean.jpg');
     }
-  }
+ }
 
-?>
+  ?>
   <div class="page-banner">
     <div class="page-banner__bg-image" style="background-image: url(<?php 
       //echo get_theme_file_uri('/images/ocean.jpg');
@@ -34,7 +46,9 @@ function pageBanner($args = null) {
       </div>
     </div>
   </div>
-<?php }
+  <?php 
+}
+
 
 function university_files() {
   # Función microtime() para asegurarnos que el navegador cargue la mas reciente actualizaciòn o modificación del file. Solo se recomiendo colocarlo en desarrollo. 
