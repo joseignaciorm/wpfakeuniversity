@@ -1,5 +1,17 @@
 <?php
 
+  require get_theme_file_path('/inc/search-route.php');
+
+// Inicializando WordPress Rest API
+function university_custom_rest() {
+  // Registro de JSON datos custom field named author.
+  // register_rest_field('the custom type name', 'Wherever name of custom field we want', 'array that describehow we want to manage that field')
+  register_rest_field('post', 'authorName', array(
+    'get_callback' => function () {return get_the_author();}
+  ));
+}
+add_action('rest_api_init', 'university_custom_rest');
+
 // Función para el page banner dinámico
 function pageBanner($args = null) {
   if(!$args['title']) {
@@ -16,9 +28,9 @@ function pageBanner($args = null) {
     } else {
       $args['photo'] = get_theme_file_uri('/images/ocean.jpg');
     }
-  }
+ }
 
-?>
+  ?>
   <div class="page-banner">
     <div class="page-banner__bg-image" style="background-image: url(<?php 
       //echo get_theme_file_uri('/images/ocean.jpg');
@@ -34,15 +46,25 @@ function pageBanner($args = null) {
       </div>
     </div>
   </div>
-<?php }
+  <?php 
+}
+
 
 function university_files() {
   # Función microtime() para asegurarnos que el navegador cargue la mas reciente actualizaciòn o modificación del file. Solo se recomiendo colocarlo en desarrollo. 
-  wp_enqueue_script('google-map', '//maps/googleapis.com/maps/api/js?key=AIzaSyBLUon66q_9n-QAN5UAvYa5ApJ_nGIH-OY', NULL, microtime(), true);
+  wp_enqueue_script('google-map', 'https://maps/googleapis.com/maps/api/js?key=AIzaSyCcpgaQiu3l_d_ftYvqtBcRTZ8fxQ2usxU&callback=initMaps', array( ), microtime(), true);
   wp_enqueue_script('main-university-js', get_theme_file_uri('/js/scripts-bundled.js'), NULL, microtime(), true);
   wp_enqueue_style('custom-google-fonts', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
   wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
   wp_enqueue_style('university_main_styles', get_stylesheet_uri(), null, microtime());
+
+  # Permite poner JS data en html page. Recibe tres argumentos
+  # Primer parámetro: Queremos incluir el name o handle del main JS file; es decir, JS file que queremos que sea flexible.
+  # Segundo parámetro: Creamos nombre de la variable.
+  # Tercer parámetro: Array de datos que queremos que este disponible en JavaScript
+  wp_localize_script('main-university-js', 'universityData', [
+    'root_url' => get_site_url() // Return current url of the current WordPress instalation 
+  ]);
 }
 add_action('wp_enqueue_scripts', 'university_files');
 
@@ -90,9 +112,16 @@ function university_adjust_queries($query) {
 }
 add_action('pre_get_posts', 'university_adjust_queries');
 
-
+/*
 function universityMapKey($api) {
   $api['key'] = 'AIzaSyCcpgaQiu3l_d_ftYvqtBcRTZ8fxQ2usxU';
   return $api;
 }
 add_filter('acf/fields/google_map/api', 'universityMapKey');
+*/
+
+// Method 2: Setting.
+function my_acf_init() {
+  acf_update_setting('google_api_key', 'AIzaSyCcpgaQiu3l_d_ftYvqtBcRTZ8fxQ2usxU');
+}
+add_action('acf/init', 'my_acf_init');
