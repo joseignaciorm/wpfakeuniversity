@@ -52,7 +52,7 @@ function pageBanner($args = null) {
 
 function university_files() {
   # Función microtime() para asegurarnos que el navegador cargue la mas reciente actualizaciòn o modificación del file. Solo se recomiendo colocarlo en desarrollo. 
-  wp_enqueue_script('google-map', 'https://maps/googleapis.com/maps/api/js?key=AIzaSyCcpgaQiu3l_d_ftYvqtBcRTZ8fxQ2usxU&callback=initMaps', array( ), microtime(), true);
+  /*wp_enqueue_script('google-map', 'http://maps/googleapis.com/maps/api/js?key=AIzaSyB-sXN3XlnVFt3335bKi0OlN9WuLECZkuE', null, microtime(), true);*/
   wp_enqueue_script('main-university-js', get_theme_file_uri('/js/scripts-bundled.js'), NULL, microtime(), true);
   wp_enqueue_style('custom-google-fonts', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
   wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
@@ -88,6 +88,10 @@ add_action('after_setup_theme', 'university_features');
 
 
 function university_adjust_queries($query) {
+  if( !is_admin() AND is_post_type_archive('campus') AND $query->is_main_query() ) {
+    $query->set('posts_per_page', -1);
+  }
+
   if( !is_admin() AND is_post_type_archive('program') AND $query->is_main_query() ) {
     $query->set('orderby', 'title');
     $query->set('order', 'ASC');
@@ -112,16 +116,18 @@ function university_adjust_queries($query) {
 }
 add_action('pre_get_posts', 'university_adjust_queries');
 
-/*
+
+// Method 1: Setting.
 function universityMapKey($api) {
-  $api['key'] = 'AIzaSyCcpgaQiu3l_d_ftYvqtBcRTZ8fxQ2usxU';
+  $api['key'] = 'AIzaSyB-sXN3XlnVFt3335bKi0OlN9WuLECZkuE';
   return $api;
 }
 add_filter('acf/fields/google_map/api', 'universityMapKey');
-*/
 
+/*
 // Method 2: Setting.
 function my_acf_init() {
-  acf_update_setting('google_api_key', 'AIzaSyCcpgaQiu3l_d_ftYvqtBcRTZ8fxQ2usxU');
+  acf_update_setting('google_api_key', 'AIzaSyB-sXN3XlnVFt3335bKi0OlN9WuLECZkuE');
 }
 add_action('acf/init', 'my_acf_init');
+*/
