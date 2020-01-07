@@ -1,6 +1,7 @@
 <?php get_header(); 
     while(have_posts()) {
         the_post(); 
+
         pageBanner();
         ?>
   <div class="container container--narrow page-section">
@@ -47,7 +48,13 @@
     <?php endif; ?>
 
     <div class="generic-content">
-      <?php the_content(); ?>
+        <form class="search-form" method="get" action="<?php echo esc_url(site_url('/')); ?>">
+            <label class="headline headline--medium" for="s">Performe a new Search</label>
+            <div class="search-form-row">
+              <input placeholder="What are you looking for?" class="s" id="s" type="search" name="s">
+              <input class="search-submit" type="submit" value="Search">
+            </div>
+      </form>
     </div>
 
   </div>
