@@ -131,3 +131,44 @@ function my_acf_init() {
 }
 add_action('acf/init', 'my_acf_init');
 */
+
+// Redirect subscriber accounts out of admin and onto homepage
+add_action('admin_init', 'redirectSubsToFrontEnd');
+
+function redirectSubsToFrontEnd () {
+  $ourCurrentUser = wp_get_current_user();
+  if (count($ourCurrentUser->roles) == 1 AND $ourCurrentUser->roles[0] == 'subscriber') {
+    wp_redirect(site_url('/'));
+    exit;
+  }
+}
+
+//Quitar admin bar si es solo subscriptor
+add_action('wp_loaded', 'noSubsAdminBar');
+
+function noSubsAdminBar () {
+  $ourCurrentUser = wp_get_current_user();
+  if (count($ourCurrentUser->roles) == 1 AND $ourCurrentUser->roles[0] == 'subscriber') {
+    show_admin_bar(false);
+  }
+}
+
+// Customize Login Screen
+add_filter('login_headerurl', 'ourHeaderUrl');
+
+function ourHeaderUrl () {
+  return esc_html(site_url('/'));
+}
+
+add_action('login_enqueue_scripts', 'ourLogingCSS');
+
+function ourLogingCSS () {
+  wp_enqueue_style('university_main_styles', get_stylesheet_uri(), null, microtime());
+  wp_enqueue_style('custom-google-fonts', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
+}
+
+add_filter('login_headertitle', 'ourLoginTitle');
+
+function ourLoginTitle () {
+  return get_bloginfo('name');
+}
