@@ -63,5 +63,6 @@
 
   <?php wp_footer(); ?>
 
+  <!--<script type='text/javascript' async="async" src="http://maps/googleapis.com/maps/api/js?key=AIzaSyB-sXN3XlnVFt3335bKi0OlN9WuLECZkuE"></script>-->
   </body>
 </html>

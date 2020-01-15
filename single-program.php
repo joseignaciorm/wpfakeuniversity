@@ -76,8 +76,24 @@
 
          while($homepageEvent->have_posts()) : $homepageEvent->the_post();
             get_template_part('template-parts/content-event');
-         endwhile;
-          } ?>
+         endwhile; 
+         } 
+
+         wp_reset_postdata();
+
+         $relatedCampus = get_field('related_campus');
+         echo '<hr class="section-break">';
+         if($relatedCampus) {
+          echo '<h2 class="headline headline--medium">'. get_the_title() .' is available At this campuses:</h2>';
+          echo '<ul class="min-list link-list">';
+          foreach($relatedCampus as $campus) {
+            ?>
+            <li><a href="<?php echo get_the_permalink($campus); ?>"><?php echo get_the_title($campus); ?></a></li>
+            <?php
+          }
+          echo '</ul>';
+         }
+         ?>
 
   </div>
   

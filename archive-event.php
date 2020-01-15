@@ -17,6 +17,7 @@
     
     while( have_posts() ) :
       the_post(); 
+      echo 'hola';
         get_template_part('template-parts/content-event');
       endwhile;  
     # En general la paginación en WP solo funciona fuera del box con la query por defecto en la current url
